@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "pranav",
+    "password": "password",
+    "database": "nuvert",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "pranav",
+    "password": "password",
+    "database": "nuvert",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "pranav",
+    "password": "password",
+    "database": "nuvert",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
