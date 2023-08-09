@@ -85,8 +85,88 @@ const updateById = async (req, res) => {
   }
 };
 
+const getById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const compound = JSON.parse(JSON.stringify(await Compounds.findByPk(id)));
+    if (!compound) {
+      return res.status(404).json({
+        status: "error",
+        message: "compound not found",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "successfully retrieved compound",
+      compound,
+    });
+  } catch (error) {
+    console.log(`Error in getById: ${error.message}`);
+    res.status(500).json({
+      status: "error",
+      message: "failed to retrieve compound",
+      error: error.message,
+    });
+  }
+};
+
+const createOne = async (req, res) => {
+  try {
+    const { name, description, image } = req.body;
+    const compound = await Compounds.create({
+      name,
+      description,
+      image,
+    });
+    res.status(201).json({
+      status: "success",
+      message: "successfully created compound",
+      compound: JSON.parse(JSON.stringify(compound)),
+    });
+  } catch (error) {
+    console.log(`Error in createOne: ${error.message}`);
+    res.status(500).json({
+      status: "error",
+      message: "failed to create compound",
+      error: error.message,
+    });
+  }
+};
+
+const deleteById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const compound = JSON.parse(JSON.stringify(await Compounds.findByPk(id)));
+    if (!compound) {
+      return res.status(404).json({
+        status: "error",
+        message: "compound not found",
+      });
+    }
+    await Compounds.destroy({
+      where: {
+        id,
+      },
+    });
+    res.status(200).json({
+      status: "success",
+      message: "successfully deleted compound",
+    });
+  } catch (error) {
+    console.log(`Error in deleteById: ${error.message}`);
+    res.status(500).json({
+      status: "error",
+      message: "failed to delete compound",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   getList,
   uploadList,
   updateById,
+  getById,
+  createOne,
+  deleteById,
 };
