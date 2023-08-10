@@ -23,6 +23,24 @@ const getList = async (req, res) => {
   }
 };
 
+const getLen = async (req, res) => {
+  try {
+    const len = await Compounds.count();
+    res.status(200).json({
+      status: "success",
+      message: "successfully retrieved length of compounds list",
+      count: len,
+    });
+  } catch (error) {
+    console.log(`Error in getLen: ${error.message}`);
+    res.status(500).json({
+      status: "error",
+      message: "failed to retrieve length of compounds list",
+      error: error.message,
+    });
+  }
+};
+
 const uploadList = async (req, res) => {
   try {
     const { compounds } = req.body;
@@ -164,6 +182,7 @@ const deleteById = async (req, res) => {
 
 module.exports = {
   getList,
+  getLen,
   uploadList,
   updateById,
   getById,
